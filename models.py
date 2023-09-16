@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Nullable
+from sqlalchemy import Nullable, insert
 
 db = SQLAlchemy()
 
@@ -29,3 +29,15 @@ class Ticket(db.Model):
           "status": self.status_string(),
           "url": self.url   
         }
+    
+    # @staticmethod
+    # def insert(ticket):
+    #     """
+    #     Inserts a ticket into the database
+    #     """
+    #     # print(ticket)
+    #     Ticket(**ticket)
+    #     db.session.add(ticket)
+
+
+

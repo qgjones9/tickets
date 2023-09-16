@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Bootstrap registration form{% endblock %}
+
+{% block body %}
+<div class="container">
+  <form method="post">
+      <label for="ticket_id" class="form-label">Ticket Number</label>
+      <br>
+      <input name="ticket_id" 
+        class="form-control" 
+        type="text" 
+        placeholder="Ticket Identification Number" 
+        value="{{ request.form['ticket_id'] }}">
+      </input>
+      <br>
+
+      <label for="ticket_name" class="form-label">Ticket Number</label>
+      <br>
+      <input name="ticket_name" 
+        class="form-control" 
+        type="text" 
+        placeholder="Ticket Name" 
+        value="{{ request.form['ticket_name'] }}">
+      </input>
+      <br>
+
+      <!-- # use a dropdown menu to collect ticket status information from the user -->
+      <label for="ticket_status" class="form-label"">Ticket Status</label>
+      <br>
+      <select id="ticket_status" class="form-control" name="ticket_status" >
+        <option  value="{{ request.form['ticket_status'] }}">Reported</option>
+        <option  value="{{ request.form['ticket_status'] }}">In Progress</option>
+        <option  value="{{ request.form['ticket_status'] }}">In Review</option>
+        <option  value="{{ request.form['ticket_status'] }}">Resolved</option>
+      </select>
+      <br>
+
+      <label for="ticket_url" class="form-lable">Ticket URL</label>
+      <input id="ticket_url" type="url" name="ticket_url" class="form-control">
+
+      <button type="submit">Submit</button>
+  </form>
+
+  <br>
+
+
+
+{% endblock %}

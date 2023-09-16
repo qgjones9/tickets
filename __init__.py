@@ -1,14 +1,17 @@
 import os
 from flask import (
   Flask, redirect, render_template, url_for, abort,
-  jsonify 
+  jsonify, request, flash
 )
 
+
+
+messages = []
 
 def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_mapping(
-        SECRET_KEY=os.environ.get('SECRET KEY', default='dev')   
+        SECRET_KEY=os.environ.get('SECRET KEY', default=os.urandom(24).hex())   
     )
 
     if test_config is None:
@@ -36,6 +39,7 @@ def create_app(test_config=None):
     @app.route('/')
     def index():
         return redirect(url_for('tickets'))
+    
 
     @app.route('/tickets')
     def tickets():
@@ -64,7 +68,29 @@ def create_app(test_config=None):
         except NoResultFound:
             return jsonify({'error': 'ticket not found' }, 404)
 
+    @app.route('/about')
+    def about():
+        return render_template('about.html')
+    
+    # html forms using bootstrap templates
+    @app.route('/register', methods=('GET', 'POST'))
+    def register():
+        if request.method == 'POST':
+            print(request.form)
+
+            t = Ticket(
+                id=request.form['ticket_id'],
+                name=request.form['ticket_name'],
+                status=request.form['ticket_status'], 
+                url=request.form['ticket_url']
+            )
+
+            db.session.add(t)
+            db.session.commit()
+
+            return render_template('register.html')
+        
+        if request.method == 'GET':
+            return render_template('register.html')
+    
     return app
-
-
-
